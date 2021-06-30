@@ -1,0 +1,125 @@
+<br>
+
+<table id="tablet1">
+  <thead>
+    <tr>
+      <td style=" border: inset 0pt">        
+          <input type="text" (keypress)="buscarNombre($event)" [(ngModel)]="nombre" class="form-control" name="nombre"
+          placeholder="Filtro por Nombre" 
+          id="nombre">        
+      </td>
+      <td style=" border: inset 0pt">        
+          <input type="text" (keypress)="buscarApellido($event)" [(ngModel)]="apellido" class="form-control" name="nombre"
+          placeholder="Filtro por Apellido"  
+          id="apellido">        
+      </td>
+      <td style=" border: inset 0pt">        
+      </td>
+      <td style=" border: inset 0pt">        
+      </td>
+      <td style=" border: inset 0pt">        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
+          Registrar
+        </button>
+      </td>  
+    </tr>
+    <tr>      
+      <th scope="col">NOMBRES</th>
+      <th scope="col">APELLIDOS</th>
+      <th scope="col">FECHA NACIMIENTO</th>
+      <th scope="col">DIRECCIÓN</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+   
+    <tr *ngFor="let paciente of pacientes">
+      <td> {{paciente.nombre}} </td>
+      <td> {{paciente.apellido}} </td>
+      <td> {{paciente.fecha_nac  | date: "dd/MM/yyyy"}} </td>
+      <td> {{paciente.direccion}} </td>      
+      <td>
+        <button class="btn btn-primary" (click)="verHistorial(paciente.idpaciente)">
+          Historial
+        </button>
+      </td>
+
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6"> 
+      <div class="btn-group col-md-2 offset-md-5">
+        <button 
+        type="button"
+        class="btn btm-sm btn-outline-secondary"
+        *ngFor="let pag of pages"
+        (click)="loadPag(pag)">
+          {{pag}}
+        </button>
+      </div>       
+      </td>
+    </tr>
+  </tfoot>
+
+</table>
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Registro de Doctores</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          
+          <div class="form-group"> 
+              <label for="nombre">NOMBRES</label> 
+              <input type="text" 
+                  required minlength="3"             
+                  class="form-control" 
+                  name="nombre" 
+                  [(ngModel)]="paciente.nombre" 
+                  placeholder="Nombres">
+          </div>
+          <div class="form-group"> 
+            <label for="apellido">APELLIDOS</label> 
+            <input type="text" 
+                required minlength="3"             
+                class="form-control" 
+                name="apellido" 
+                [(ngModel)]="paciente.apellido" 
+                placeholder="Apellidos">
+        </div>                
+      <div class="form-group"> 
+        <label for="fecha_nac">FECHA DE NACIMIENTO</label> 
+        <input type="date" 
+            required minlength="3"             
+            class="form-control" 
+            name="fecha_nac" 
+            [(ngModel)]="paciente.fecha_nac" 
+            placeholder="Fecha de nacimiento">
+    </div>     
+      
+      <div class="form-group"> 
+        <label for="direccion">DIRECCIÓN</label> <br>
+           
+        <textarea class="form-control"   
+                  name="direccion" 
+                    [(ngModel)]="paciente.direccion"                                      
+                    rows="3"
+                    place-holder="Direccion">
+        </textarea>          
+    </div>    
+
+      </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="registrarPaciente()">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
